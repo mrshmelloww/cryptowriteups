@@ -5,5 +5,5 @@ mathjax: true
 
 ## CyberEto Challenges
 
-- [The Leaky Device](theLeakyDevice.md)
+- [The Leaky Device](cybereto/theLeakyDevice/theLeakyDevice.md)
 

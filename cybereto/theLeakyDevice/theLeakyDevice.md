@@ -190,6 +190,6 @@ print(flag.decode('utf-8'))
 And there we have it, our flag is `cybereto{SRJ_OK}`.
 
 ## Final Thoughts
-Overall, the challenge demonstrates how little leakage is needed to break AES when the implementation isn’t protected. Even though the AES algorithm itself is secure, the traces give away enough information to recover the key one byte at a time using simple statistical analysis. The process is repetitive, but once the pipeline is set up, each key-byte falls quickly. The main lesson is that side-channel attacks exploit the _implementation_, not the math, and even a small amount of unprotected leakage is enough to fully recover the secret key.
+In the end, this challenge basically showed me how ridiculous it is that AES can fall apart from such tiny leaks. The algorithm itself is rock solid, nothing wrong with the math, but the moment the implementation leaks even a little bit, the whole key starts handing itself over one byte at a time. Once the pipeline is set up, it’s almost mechanical: guess, correlate, move on to the next byte. It’s kind of wild how little information you actually need. The main thing I learned is that side-channel attacks don’t try to break AES directly; they just wait for the implementation to slip, and that tiny slip is enough to reveal everything.
 
 ##### [Check out the challenge files](https://github.com/mrshmelloww/crypto-writeups/tree/main/cybereto/theLeakyDevice/challengeFiles)

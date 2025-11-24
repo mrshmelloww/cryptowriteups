@@ -55,49 +55,33 @@ Normally, brute-forcing AES-128 is $2^{128}$ operations, which is basically long
 
 As we said before, we want to brute-force all 256 values for each key-byte position and compare them to the traces we have. The key-byte guess with the highest correlation is the correct one for that position.
 
-For each key-byte position  
-$j$
-, we try every key-guess  
-$k$
-. For every plaintext/trace index  
-$i∈[1,N]$
-, we compute the predicted leakage value under the Hamming-Weight model. This gives us a prediction vector of size  
-$N$
-, one value per trace.
+For each key-byte position  $j$, we try every key-guess  $k$. For every plaintext/trace index  $i∈[1,N]$, we compute the predicted leakage value under the Hamming-Weight model. This gives us a prediction vector of size  $N$, one value per trace.
 
-Each trace has  
-$T$
-  sample points, so for each column  
-$t∈[1,T]$
-    in the trace matrix  
-$trace[i][t]$
-, we compute the correlation between our prediction vector and that column. For each key-guess  
-$k$
-, we record the highest correlation across all  
-$T$
-  columns. The key-guess with the highest peak correlation is the correct value for that byte position, and then we move on to the next byte.
+Each trace has  $T$  sample points, so for each column  $t∈[1,T]$  in the trace matrix  $trace[i][t]$, we compute the correlation between our prediction vector and that column. For each key-guess  $k$, we record the highest correlation across all  $T$  columns. The key-guess with the highest peak correlation is the correct value for that byte position, and then we move on to the next byte.
 
-That sounds good but how do we compute the correlation value for a byte-guess 
-$k$
-? 
+That sounds good but how do we compute the correlation value for a byte-guess $k$? 
 
 Given that our current prediction vector is:
- $$P =
+
+$$P =
 \begin{bmatrix}
 P_1 \\
 P_2 \\
 \vdots \\
 P_N
-\end{bmatrix}$$ and our current trace column is:
- $$C_t =
+\end{bmatrix}$$
+
+and our current trace column is:
+
+$$C_t =
 \begin{bmatrix}
 C_{1,t} \\
 C_{2,t} \\
 \vdots \\
 C_{N,t}
 \end{bmatrix}$$
-we compute 
-$\rho(P, C_t) = \mathrm{corr}(P, C_t)$. 
+
+we compute $\rho(P, C_t) = \mathrm{corr}(P, C_t)$. 
 
 This is given by the following formula: 
 
@@ -106,15 +90,10 @@ $$\mathrm{corr}(P, C_t)=
      {\sqrt{\sum_{i=1}^N (P_i - \mu_P)^2}\;
       \sqrt{\sum_{i=1}^N (C_{i,t} - \mu_{C_t})^2}}$$
 
-where we have the mean of 
-$P$
- and 
- $C_t$
-: 
-$\mu_P = \frac{1}{N}\sum_{i=1}^N P_i$,
-   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ 
-$\mu_{C_t} = \frac{1}{N}\sum_{i=1}^N C_{i,t}$
+where we have the means of $P$ and $C_t$:
+‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ $\mu_P = \frac{1}{N}\sum_{i=1}^N P_i$,   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ $\mu_{C_t} = \frac{1}{N}\sum_{i=1}^N C_{i,t}$
 
+‎ ‎ ‎ 
 Here is how we implement this is in python:
 ```py
 import  numpy  as  np
@@ -213,4 +192,4 @@ And there we have it, our flag is `cybereto{SRJ_OK}`.
 ## Final Thoughts
 Overall, the challenge demonstrates how little leakage is needed to break AES when the implementation isn’t protected. Even though the AES algorithm itself is secure, the traces give away enough information to recover the key one byte at a time using simple statistical analysis. The process is repetitive, but once the pipeline is set up, each key-byte falls quickly. The main lesson is that side-channel attacks exploit the _implementation_, not the math, and even a small amount of unprotected leakage is enough to fully recover the secret key.
 
-##### [Download challenge files](challengeFiles.zip)
+##### [Check out the challenge files](https://github.com/mrshmelloww/cryptowriteups/tree/main/cybereto/theLeakyDevice/challengeFiles)

@@ -62,20 +62,26 @@ Each trace has  $T$  sample points, so for each column  $t∈[1,T]$  in the trac
 That sounds good but how do we compute the correlation value for a byte-guess $k$? 
 
 Given that our current prediction vector is:
- $$P =
+
+$$P =
 \begin{bmatrix}
 P_1 \\
 P_2 \\
 \vdots \\
 P_N
-\end{bmatrix}$$ and our current trace column is:
- $$C_t =
+\end{bmatrix}$$
+
+and our current trace column is:
+
+$$C_t =
 \begin{bmatrix}
 C_{1,t} \\
 C_{2,t} \\
 \vdots \\
 C_{N,t}
-\end{bmatrix}$$we compute $\rho(P, C_t) = \mathrm{corr}(P, C_t)$. 
+\end{bmatrix}$$
+
+we compute $\rho(P, C_t) = \mathrm{corr}(P, C_t)$. 
 
 This is given by the following formula: 
 
@@ -84,7 +90,7 @@ $$\mathrm{corr}(P, C_t)=
      {\sqrt{\sum_{i=1}^N (P_i - \mu_P)^2}\;
       \sqrt{\sum_{i=1}^N (C_{i,t} - \mu_{C_t})^2}}$$
 
-where we have the mean of $P$ and $C_t$
+where we have the means of $P$ and $C_t$:
 ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ $\mu_P = \frac{1}{N}\sum_{i=1}^N P_i$,   ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ $\mu_{C_t} = \frac{1}{N}\sum_{i=1}^N C_{i,t}$
 
 ‎ ‎ ‎ 
